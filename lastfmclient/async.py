@@ -1,5 +1,11 @@
 import json
-from urllib import urlencode
+import urllib
+
+if hasattr(urllib, 'urlencode'):
+    urlencode = urllib.urlencode
+else:
+    import urllib.parse
+    urlencode = urllib.parse.urlencode
 
 from tornado.gen import coroutine, Return
 from tornado.httpclient import AsyncHTTPClient
