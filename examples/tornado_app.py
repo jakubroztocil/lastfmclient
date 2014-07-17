@@ -1,5 +1,6 @@
 import argparse
 import json
+import logging
 
 import tornado.web
 import tornado.gen
@@ -45,21 +46,21 @@ class LastfmHandler(tornado.web.RequestHandler):
         )
         token = self.get_argument('token')
 
-        print 'Fetching session...'
+        logging.info('Fetching session...')
         session = yield client.auth.get_session(token)
 
         client.session_key = session['key']
 
-        print 'Fetching user info...'
+        logging.info('Fetching user info...')
         user = yield client.user.get_info()
 
-        print 'Fetching tracks and friends simultaneously...'
+        logging.info('Fetching tracks and friends simultaneously...')
         tracks, friends = yield [
             client.user.get_recent_tracks(user=user['name'], limit=3),
             client.user.get_friends(user=user['name'], limit=3)
         ]
 
-        print 'Finishing.'
+        logging.info('Finishing.')
 
         self.set_header('Content-Type', 'text/plain')
         self.write('You:\n\n')
