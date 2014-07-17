@@ -35,7 +35,7 @@ class AsyncLastfmClient(LastfmClient):
         url = API_URL
 
         params = self._get_params(method, params, auth)
-        params = urlencode({k: v for k, v in params.items()})
+        params = urlencode(params)
         if http_method == 'POST':
             body = params
         else:

@@ -127,9 +127,8 @@ class LastfmClient(BaseClient):
             )
 
         if isinstance(data, dict):
-            keys = data.keys()
+            keys = list(data.keys())
             if len(keys) == 1:
-                return data[list(keys)[0]]
+                return data[keys[0]]
 
         return data
-
