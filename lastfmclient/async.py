@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import json
 import urllib
 
@@ -34,8 +35,7 @@ class AsyncLastfmClient(LastfmClient):
         url = API_URL
 
         params = self._get_params(method, params, auth)
-        params = urlencode({k: unicode(v).encode('utf8')
-                            for k, v in params.items()})
+        params = urlencode({k: v for k, v in params.items()})
         if http_method == 'POST':
             body = params
         else:
@@ -47,5 +47,6 @@ class AsyncLastfmClient(LastfmClient):
                                                   body=body)
         if response.error is not None:
             response.rethrow()
-        data = self._process_response_data(json.loads(response.body))
+        body = response.body.decode('utf-8')
+        data = self._process_response_data(json.loads(body))
         raise Return(data)

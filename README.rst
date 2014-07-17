@@ -28,7 +28,7 @@ Regular
         album='OK Computer',
     )
 
-    print resp
+    print(resp)
 
 
 Asynchronous (uses ``tornado.httpclient.AsyncHTTPClient``)
