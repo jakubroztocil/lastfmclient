@@ -1,12 +1,10 @@
 from __future__ import unicode_literals
 import json
-import urllib
 
-if hasattr(urllib, 'urlencode'):
-    urlencode = urllib.urlencode
-else:
-    import urllib.parse
-    urlencode = urllib.parse.urlencode
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
 
 from tornado.gen import coroutine, Return
 from tornado.httpclient import AsyncHTTPClient
