@@ -96,6 +96,14 @@ class LastfmClient(BaseClient):
         needs_auth = auth or getting_session or (
             method == 'user.getInfo' and 'user' not in params)
 
+        for key, value in params.items():
+            if not isinstance(value, str):
+                try:
+                    value = str(value)
+                except UnicodeEncodeError:
+                    value = value.encode('utf-8')
+            params[key] = value
+
         if needs_auth:
             if not getting_session:
                 assert self.session_key, 'Missing session key.'
