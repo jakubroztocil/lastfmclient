@@ -102,7 +102,7 @@ class LastfmClient(BaseClient):
                     value = str(value)
                 except UnicodeEncodeError:
                     value = value.encode('utf-8')
-            params[key] = value
+                params[key] = value
 
         if needs_auth:
             if not getting_session:
